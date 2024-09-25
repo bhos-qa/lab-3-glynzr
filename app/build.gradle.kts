@@ -51,10 +51,8 @@ jacoco {
 
 sonarqube {
     properties {
-//        property ("sonar.projectKey", "bhos-qa_lab-3-glynzr")
-//        property( "sonar.organization", "bhos-qa")
+
         property("sonar.projectName", "lab-3-glynzr")
         property("sonar.host.url", "https://sonarcloud.io")
-//        property("sonar.login", project.findProperty("sonar.login") ?: "")
     }
 }
