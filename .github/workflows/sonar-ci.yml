@@ -37,5 +37,5 @@ jobs:
         run: ./gradlew test jacocoTestReport
 
       - name: Upload Jacoco code coverage and run SonarCloud analysis
-        run: ./gradlew   test jacocoTestReport sonarqube -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.organization=${{ secrets.ORGANIZATION_KEY }} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew   test jacocoTestReport sonarqube -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.organization=${{ secrets.ORGANIZATION_KEY }} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.jacoco.reportPath=build/jacoco/test.exec
 
