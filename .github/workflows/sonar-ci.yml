@@ -39,11 +39,12 @@ jobs:
             projectBaseDir: '.'
         env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#      - name: Upload Jacoco HTML report
-#        uses: actions/upload-artifact@v3
-#        with:
-#            name: jacoco-html-report
-#            path: build/reports/jacoco/test/html
+
+      - name: Upload Jacoco HTML report
+        uses: actions/upload-artifact@v3
+        with:
+            name: jacoco-html-report
+            path: app/build/reports/jacoco/test/html/index.html
 
 #      - name: Upload Jacoco code coverage and run SonarCloud analysis
 #        run: ./gradlew   test jacocoTestReport sonarqube -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.organization=${{ secrets.ORGANIZATION_KEY }} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.jacoco.reportPath=build/jacoco/test.exec
