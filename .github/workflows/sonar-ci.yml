@@ -12,32 +12,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the latest code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up JDK 21 with distribution (Temurin is commonly used)
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
           java-version: '21'
+          distribution: 'temurin'
+          java-package: 'jdk'
+          check-latest: false
+          server-id: 'github'
+          server-username: '${{ secrets.GITHUB_ACTOR }}'
+          server-password: '${{ secrets.GITHUB_TOKEN }}'
+          overwrite-settings: true
 
+      # Cache SonarCloud packages to improve workflow performance
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
 
+      # Cache Gradle dependencies to speed up the build
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
+      # Build the project using Gradle
       - name: Build with Gradle
         run: ./gradlew build
 
+      # Run tests and generate JaCoCo test coverage report
       - name: Run tests with JaCoCo
         run: ./gradlew jacocoTestReport
 
+      # SonarCloud analysis
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
@@ -45,6 +59,7 @@ jobs:
           organization: your_org_name
           token: ${{ secrets.SONAR_TOKEN }}
 
+      # Disable SonarCloud Automatic Review (if needed)
       - name: Disable SonarCloud Automatic Review
         run: |
           curl -X POST "https://sonarcloud.io/api/project_branches/rename" \
