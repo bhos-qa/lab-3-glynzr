@@ -55,5 +55,7 @@ sonarqube {
 
         property("sonar.projectName", "lab-3-glynzr")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths","${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+
     }
 }
