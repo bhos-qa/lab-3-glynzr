@@ -58,4 +58,5 @@ jobs:
               -Dsonar.qualitygate.linecoverage=90
               -Dsonar.qualitygate.securityVulnerabilities=0
               -Dsonar.java.libraries=app/build/libs/*.jar
-              -Dsonar.scm.provider=git 
+              -Dsonar.scm.provider=git
+              -Dsonar.sources=app/arc/main
