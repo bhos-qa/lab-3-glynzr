@@ -1,6 +1,7 @@
 plugins {
     application
     jacoco // Add the Jacoco plugin for code coverage
+    id("org.sonarqube") version "4.0.0.2929" // Use a valid version of the SonarQube plugin
 }
 
 repositories {
@@ -44,4 +45,16 @@ tasks.jacocoTestReport {
 // Optional: You can customize Jacoco's coverage rules here if needed
 jacoco {
     toolVersion = "0.8.11" // Adjust to your preferred version
+}
+
+// Configure SonarQube properties
+
+sonarqube {
+    properties {
+        property ("sonar.projectKey", "bhos-qa_lab-3-glynzr")
+        property( "sonar.organization", "bhos-qa")
+        property("sonar.projectName", "lab-3-glynzr")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.login", project.findProperty("sonar.login") ?: "")
+    }
 }
