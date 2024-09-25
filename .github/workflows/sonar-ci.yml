@@ -55,9 +55,10 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
-          projectKey: bhos-qa_lab-3-glynzr
-          organization: bhos-qa
-          token: ${{ secrets.SONAR_TOKEN }}
+          args: >
+            projectKey: bhos-qa_lab-3-glynzr
+            organization: bhos-qa
+            token: ${{ secrets.SONAR_TOKEN }}
 
       # Disable SonarCloud Automatic Review (if needed)
       - name: Disable SonarCloud Automatic Review
