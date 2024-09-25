@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew sonarqube -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.organization=${{ secrets.ORGANIZATION_KEY }} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Upload HTML report as a GitHub artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
             name: code-coverage-report
             path: build/reports/jacoco/test/html
