@@ -33,8 +33,14 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Run tests with Jacoco
+      - name: Run tests and generate Jacoco report
         run: ./gradlew test jacocoTestReport
 
       - name: Upload Jacoco code coverage and run SonarCloud analysis
         run: ./gradlew sonarqube -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.organization=${{ secrets.ORGANIZATION_KEY }} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name: Upload HTML report as a GitHub artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: build/reports/jacoco/test/html
