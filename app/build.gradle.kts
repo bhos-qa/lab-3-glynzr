@@ -42,6 +42,7 @@ tasks.jacocoTestReport {
     }
 }
 
+
 // Optional: You can customize Jacoco's coverage rules here if needed
 jacoco {
     toolVersion = "0.8.11" // Adjust to your preferred version
