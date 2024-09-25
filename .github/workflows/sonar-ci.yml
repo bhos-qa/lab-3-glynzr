@@ -1,0 +1,52 @@
+name: SonarCloud Code Quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - feature/lab3
+
+jobs:
+  sonarcloud:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Run tests with JaCoCo
+        run: ./gradlew jacocoTestReport
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectKey: your_project_key
+          organization: your_org_name
+          token: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Disable SonarCloud Automatic Review
+        run: |
+          curl -X POST "https://sonarcloud.io/api/project_branches/rename" \
+          --user "${{ secrets.SONAR_TOKEN }}" \
+          --data "project=your_project_key&branch=auto-scan&newName=disabled"
